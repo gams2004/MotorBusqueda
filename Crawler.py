@@ -3,11 +3,13 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import json
 
+#Función para guardar la estructura html de la página en un archivo txt
 def guardar_en_archivo(html_content, nombre_archivo):
     with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
         archivo.write(html_content)
     print(f'Contenido guardado en el archivo: {nombre_archivo}')
 
+#Función que rastrea e indexa la información de la página, guardándo el índice en un archivo txt
 def go(n:int, dictionary:str, output:str):
 
     if n > 38:
@@ -67,6 +69,7 @@ def go(n:int, dictionary:str, output:str):
     # Cierra el navegador
     driver.quit()
 
+#Función que extrae los datos de un curso dado 
 def obtener_elementos_curso(driver,url_curso, titulo,cursos_info_final):
     print(url_curso)
     driver.get(url_curso)
