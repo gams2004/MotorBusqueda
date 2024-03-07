@@ -4,6 +4,13 @@ from bs4 import BeautifulSoup
 import json
 import re
 import csv
+import os
+
+def compare(curso1,curso2):
+    return 
+
+def search(intereses):
+    return
 
 # Guarda el índice en un archivo csvs
 def guardar_indice_csv(indice, archivo_salida):
@@ -14,12 +21,12 @@ def guardar_indice_csv(indice, archivo_salida):
         for palabra, cursos in indice.items():
             for curso in cursos:
                 csv_writer.writerow([curso, palabra])
-    print("Contenido guardado en el archivo: ",archivo_salida)
+    print("Contenido guardado en el archivo:",archivo_salida)
 
 #Función que relaciona palabras a los cursos a través de un índice
 def construir_indice(catalogo):
     indice = {}
-    palabras_innecesarias = {"la","le","lo","los","las","el","a","y","de","del","son","es","en","por","para","con","sin","que","quienes","quien","ella","tu","desde","estos","este","estas","o","un","al","como","1","2","3","4","5","8","9","12","13","15","16","18","24","60","70","00","0651","33632","33633","entre","e","d","c","p","m","o","sus","ha","han","si","uno","ser","pueden","sobre","tanto","sin","nos","está","luego","sí","debe","no","más","mas","tener","una","se","dan","dos","as","sido","están","otros","hacia","parte","lugar","hacia","esta","su","tiene","van","sino","solo","toma","hará","dentro","quién","desde","b","h","puede","72","nueve","32","cómo","también","tendrá","in","veinte","quiere","otras","and","the","ante","i","j","k",}
+    palabras_innecesarias = {"la","le","lo","los","las","el","a","y","de","del","son","es","en","por","para","con","sin","que","quienes","quien","ella","tu","desde","estos","este","estas","o","un","al","como","1","2","3","4","5","8","9","12","13","15","16","18","24","60","70","00","0651","33632","33633","entre","e","d","c","p","m","o","sus","ha","han","si","uno","ser","pueden","sobre","tanto","sin","nos","está","luego","sí","debe","no","más","mas","tener","una","se","dan","dos","as","sido","están","otros","hacia","parte","lugar","hacia","esta","su","tiene","van","sino","solo","toma","hará","dentro","quién","desde","b","h","puede","72","nueve","32","cómo","también","tendrá","in","veinte","quiere","otras","and","the","ante","i","j","k","dejar","gran","través","mismo","haya"}
 
     for curso in catalogo:
         # Obtener identificador y contenido del curso
@@ -149,7 +156,33 @@ def obtener_elementos_curso(driver,url_curso, titulo,cursos_info_final):
 
 
 if __name__ == "__main__":
-    numero_paginas = 4
-    dictionary = "info_cursos.json"
-    BD_mapeo = "datos_mapeo.csv"
-    go(numero_paginas,dictionary,BD_mapeo)
+    flag = True
+    while  flag:
+        op = input("Crawler Python\nBIENVENIDO\nSelecciona la opción deseada\n1.Extraer información catálogo de cursos\n2.Comparar cursos\n3. Buscar cursos por intereses\n4. Salir\n")
+        if op == 1:
+            os.system("cls") 
+            numero_paginas = input("Ingrese el número de páginas del catálogo a rastrear\n")
+            dictionary = input("Ingrese el nombre del diccionario de datos\n")
+            BD_mapeo = input("Ingrese el nombre del archivo csv de salida\n")
+            go(numero_paginas,dictionary,BD_mapeo)
+
+        elif op == 2:
+            os.system("cls") 
+            curso1 = input("Ingrese el nombre del primer curso a comparar")
+            curso2 = input("Ingrese el nombre del segundo curso a comparar")
+            compare(curso1,curso2)
+
+        elif op == 3:
+            os.system("cls") 
+            intereses = list(map(int, input("Ingresa tus intereses separados por espacios").split()))
+            search(intereses)
+
+        elif op == 4:
+            os.system("cls") 
+            print("Gracias por usar nuestro programa")
+            flag = False
+
+        else:
+            os.system("cls") 
+            print("Opción incorrecta")
+        
