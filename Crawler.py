@@ -156,14 +156,15 @@ def obtener_elementos_curso(driver,url_curso, titulo,cursos_info_final):
 
 
 if __name__ == "__main__":
+    os.system("cls") 
     flag = True
     while  flag:
-        op = input("Crawler Python\nBIENVENIDO\nSelecciona la opción deseada\n1.Extraer información catálogo de cursos\n2.Comparar cursos\n3. Buscar cursos por intereses\n4. Salir\n")
+        op = int(input("Crawler Python\nBIENVENIDO\nSelecciona la opción deseada\n1.Extraer información catálogo de cursos\n2.Comparar cursos\n3. Buscar cursos por intereses\n4. Salir\n"))
         if op == 1:
             os.system("cls") 
-            numero_paginas = input("Ingrese el número de páginas del catálogo a rastrear\n")
-            dictionary = input("Ingrese el nombre del diccionario de datos\n")
-            BD_mapeo = input("Ingrese el nombre del archivo csv de salida\n")
+            numero_paginas = int(input("Ingrese el número de páginas del catálogo a rastrear\n"))
+            dictionary = input("Ingrese el nombre del diccionario de datos\n") + ".json"
+            BD_mapeo = input("Ingrese el nombre del archivo csv de salida\n") + ".csv"
             go(numero_paginas,dictionary,BD_mapeo)
 
         elif op == 2:
