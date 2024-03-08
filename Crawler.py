@@ -6,8 +6,8 @@ import re
 import csv
 import os
 
-def compare(curso1,curso2):
-    return 
+def compare(curso1, curso2, archivo_csv):
+  return 
 
 def search(intereses):
     return
@@ -15,7 +15,7 @@ def search(intereses):
 # Guarda el índice en un archivo csvs
 def guardar_indice_csv(indice, archivo_salida):
     with open(archivo_salida, 'w', newline='', encoding='utf-8') as csv_file:
-        csv_writer = csv.writer(csv_file)
+        csv_writer = csv.writer(csv_file, delimiter="|")
         csv_writer.writerow(["Curso", "Palabra"])
 
         for palabra, cursos in indice.items():
@@ -26,7 +26,7 @@ def guardar_indice_csv(indice, archivo_salida):
 #Función que relaciona palabras a los cursos a través de un índice
 def construir_indice(catalogo):
     indice = {}
-    palabras_innecesarias = {"la","le","lo","los","las","el","a","y","de","del","son","es","en","por","para","con","sin","que","quienes","quien","ella","tu","desde","estos","este","estas","o","un","al","como","1","2","3","4","5","8","9","12","13","15","16","18","24","60","70","00","0651","33632","33633","entre","e","d","c","p","m","o","sus","ha","han","si","uno","ser","pueden","sobre","tanto","sin","nos","está","luego","sí","debe","no","más","mas","tener","una","se","dan","dos","as","sido","están","otros","hacia","parte","lugar","hacia","esta","su","tiene","van","sino","solo","toma","hará","dentro","quién","desde","b","h","puede","72","nueve","32","cómo","también","tendrá","in","veinte","quiere","otras","and","the","ante","i","j","k","dejar","gran","través","mismo","haya"}
+    palabras_innecesarias = {"la","le","lo","los","las","el","a","y","de","del","son","es","en","por","para","con","sin","que","quienes","quien","ella","tu","desde","estos","este","estas","o","un","al","como","1","2","3","4","5","8","9","12","13","15","16","18","24","60","70","00","0651","33632","33633","entre","e","d","c","p","m","o","sus","ha","han","si","uno","ser","pueden","sobre","tanto","sin","nos","está","luego","sí","debe","no","más","mas","tener","una","se","dan","dos","as","sido","están","otros","hacia","parte","lugar","hacia","esta","su","tiene","van","sino","solo","toma","hará","dentro","quién","desde","b","h","puede","72","nueve","32","cómo","también","tendrá","in","veinte","quiere","otras","and","the","ante","i","j","k","dejar","gran","través","mismo","haya","unas"}
 
     for curso in catalogo:
         # Obtener identificador y contenido del curso
@@ -40,10 +40,13 @@ def construir_indice(catalogo):
         palabras = re.findall(r'\b\w+\b', contenido_curso.lower())
 
         # Construir el índice
+        pares_vistos = set()
+
         for palabra in palabras:
             if palabra not in palabras_innecesarias:
-                if palabra not in indice:
+                if (palabra, titulo) not in pares_vistos:
                     indice[palabra] = [titulo]
+                    pares_vistos.add((palabra, titulo))
                 else:
                     indice[palabra].append(titulo)
 
@@ -163,19 +166,20 @@ if __name__ == "__main__":
         if op == 1:
             os.system("cls") 
             numero_paginas = int(input("Ingrese el número de páginas del catálogo a rastrear\n"))
-            dictionary = input("Ingrese el nombre del diccionario de datos\n") + ".json"
-            BD_mapeo = input("Ingrese el nombre del archivo csv de salida\n") + ".csv"
+            dictionary = input("Ingrese el nombre del diccionario de datos (sin la extensión)\n") + ".json"
+            BD_mapeo = input("Ingrese el nombre del archivo csv de salida (sin la extensión)\n") + ".csv"
             go(numero_paginas,dictionary,BD_mapeo)
 
         elif op == 2:
             os.system("cls") 
-            curso1 = input("Ingrese el nombre del primer curso a comparar")
-            curso2 = input("Ingrese el nombre del segundo curso a comparar")
-            compare(curso1,curso2)
+            curso1 = input("Ingrese el nombre del primer curso a comparar\n")
+            curso2 = input("Ingrese el nombre del segundo curso a comparar\n")
+            similitud = compare(curso1,curso2,"datos_modelo.csv")
+            print(f"Similitud entre {curso1} y {curso2}: {similitud:.2f}%")
 
         elif op == 3:
             os.system("cls") 
-            intereses = list(map(int, input("Ingresa tus intereses separados por espacios").split()))
+            intereses = list(map(int, input("Ingresa tus intereses separados por espacios\n").split()))
             search(intereses)
 
         elif op == 4:
