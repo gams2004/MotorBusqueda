@@ -7,7 +7,7 @@ import csv
 import os
 
 def compare(curso1, curso2, archivo_csv):
-  return 
+    return 
 
 def search(intereses):
     return
