@@ -1,20 +1,21 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
+from Comparador import compare_cursos
+from Comparador import encontrar_cursos_similares
 import json
 import re
 import csv
 import os
+import glob
 
-def compare(curso1, curso2, archivo_csv):
-    return 
-
-def search(intereses):
-    return
+def compare(curso1, curso2):
+    similitud = compare_cursos(curso1, curso2)
+    return similitud
 
 # Guarda el índice en un archivo csvs
 def guardar_indice_csv(indice, archivo_salida):
-    with open(archivo_salida, 'w', newline='', encoding='utf-8') as csv_file:
+    with open(archivo_salida, 'w', newline='', encoding='utf-8-sig') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter="|")
         csv_writer.writerow(["Curso", "Palabra"])
 
@@ -40,15 +41,16 @@ def construir_indice(catalogo):
         palabras = re.findall(r'\b\w+\b', contenido_curso.lower())
 
         # Construir el índice
-        pares_vistos = set()
+        palabras_vistas = set()
 
         for palabra in palabras:
             if palabra not in palabras_innecesarias:
-                if (palabra, titulo) not in pares_vistos:
-                    indice[palabra] = [titulo]
-                    pares_vistos.add((palabra, titulo))
-                else:
-                    indice[palabra].append(titulo)
+                if palabra not in palabras_vistas:
+                    if palabra not in indice:
+                        indice[palabra] = [titulo]
+                    else:
+                        indice[palabra].append(titulo)
+                    palabras_vistas.add(palabra)
 
     return indice
 
@@ -94,7 +96,7 @@ def go(n:int, dictionary:str, output:str):
         titulo = curso.find('b', class_='card-title').text.strip() if curso.find('b',class_='card-title') else 'Título no encontrado'
         enlace = curso.find('a')['href'] if curso.find('a') else 'Enlace no encontrado'
         cursos_info.append({'titulo': titulo, 'enlace': enlace.strip()})
-        if len(cursos_info)  == n*10:
+        if len(cursos_info)  >= n*10:
             break
 
     for curso in cursos_info:
@@ -174,18 +176,34 @@ if __name__ == "__main__":
             os.system("cls") 
             curso1 = input("Ingrese el nombre del primer curso a comparar\n")
             curso2 = input("Ingrese el nombre del segundo curso a comparar\n")
-            similitud = compare(curso1,curso2,"datos_modelo.csv")
-            print(f"Similitud entre {curso1} y {curso2}: {similitud:.2f}%")
+            similitud = compare(curso1,curso2)
+            print(f"Similitud entre {curso1} y {curso2}: {similitud:.3f}\n")
 
         elif op == 3:
             os.system("cls") 
-            intereses = list(map(int, input("Ingresa tus intereses separados por espacios\n").split()))
-            search(intereses)
-
+            intereses = (input("Ingresa tus intereses separados por espacios\n").split())
+            resultados=encontrar_cursos_similares(intereses)
+            for puesto, resultado in enumerate(resultados, start=1):
+                if (resultado[1]!=0):
+                    print(f"{puesto}.{resultado[0]}, similitud: {resultado[1]:.3f}, enlace: {resultado[2]}")
+            print("\n")
         elif op == 4:
             os.system("cls") 
             print("Gracias por usar nuestro programa")
             flag = False
+
+        elif op == 5:
+            # Tomar el primer archivo CSV encontrado
+            archivos_json = glob.glob('*.json')
+            if not archivos_json:
+                raise FileNotFoundError("No se encontraron archivos JSON en la carpeta.")
+            archivo_json = archivos_json[0]
+            # Leer el archivo JSON
+            with open(archivo_json, "r", encoding="utf-8") as archivo:
+                datos_leidos = json.load(archivo)
+
+            # Ahora, datos_leidos contiene la información leída del archivo JSON
+            print(datos_leidos)
 
         else:
             os.system("cls") 
