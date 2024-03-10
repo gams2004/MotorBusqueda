@@ -12,7 +12,7 @@ def encontrar_cursos_similares(palabras):
     archivo_csv = archivos_csv[0]
 
     # Leer el archivo CSV especificando el separador y manejando comillas
-    df = pd.read_csv(archivo_csv, sep='|')
+    df = pd.read_csv(archivo_csv)
     
     # Tomar el primer archivo JSON encontrado
     archivos_json = glob.glob('*.json')

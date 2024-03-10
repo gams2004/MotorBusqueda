@@ -23,7 +23,7 @@ def compare(curso1, curso2):
 # Guarda el índice en un archivo csvs
 def guardar_indice_csv(indice, archivo_salida):
     with open(archivo_salida, 'w', newline='', encoding='utf-8-sig') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter='|')
+        csv_writer = csv.writer(csv_file)
         csv_writer.writerow(["Curso", "Palabra"])
 
         for palabra, cursos in indice.items():

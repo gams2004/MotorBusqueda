@@ -13,7 +13,7 @@ def compare_cursos(curso1, curso2):
     archivo_csv = archivos_csv[0]
 
     # Lee el archivo CSV especificando el separador y manejando comillas
-    df = pd.read_csv(archivo_csv, sep='|')
+    df = pd.read_csv(archivo_csv)
     
     # Combinar las palabras por curso
     cursos_palabras = df.groupby('Curso')['Palabra'].apply(lambda x: ' '.join(x)).reset_index()
