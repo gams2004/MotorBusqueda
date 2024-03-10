@@ -9,7 +9,7 @@ por orden de relevancia?
    R/ La métrica de similitud que definimos es a través del uso de vectores TF-IDF, los cuales compararemos con las funciones de seno y coseno, generando el porcentaje de similitud entre cursos.
 4. Dado un listado de intereses, por ejemplo [‘musica’, ‘composicion’, ‘instrumento’], el
 buscador debe retornar los cursos que más se relacionan a los intereses del usuario.
-   a) ¿Cómo se define una medida de similitud entre los cursos, y entre los cursos e intereses?
-      R/ Esta medida se define utlizando las funciones de seno y coseno, las cuales comparan la similitud de los cursos e intereses en términos de vectores para encontrar sus respectivas similitudes. 
-   b) ¿Son dos métricas diferentes? ¿puede usar la misma métrica del punto anterior?
-      R/ Se puede utilizar la misma métrica pero adecuada al contexto de cada problema. Para comparar dos cursos se tienen en cuenta todas las palabras claves que surgen de su indexación, las cuales se procesan de la forma descrita anteriormente. Sin embargo, para comparar los intereses, es necesario tener en cuenta que se van a tener menos palabras que comparar, lo cual generará una métrica diferente. Teniendo esto en cuenta, se pueden utilizar las mismas métricas pero adecuadas al caso.
+a) ¿Cómo se define una medida de similitud entre los cursos, y entre los cursos e intereses?
+   R/ Esta medida se define utlizando las funciones de seno y coseno, las cuales comparan la similitud de los cursos e intereses en términos de vectores para encontrar sus respectivas similitudes. 
+b) ¿Son dos métricas diferentes? ¿puede usar la misma métrica del punto anterior?
+   R/ Se puede utilizar la misma métrica pero adecuada al contexto de cada problema. Para comparar dos cursos se tienen en cuenta todas las palabras claves que surgen de su indexación, las cuales se procesan de la forma descrita anteriormente. Sin embargo, para comparar los intereses, es necesario tener en cuenta que se van a tener menos palabras que comparar, lo cual generará una métrica diferente. Teniendo esto en cuenta, se pueden utilizar las mismas métricas pero adecuadas al caso.
