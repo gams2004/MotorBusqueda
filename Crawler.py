@@ -1,13 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from Comparador import compare_cursos
-from Comparador import encontrar_cursos_similares
+from compare import compare_cursos
+from search import encontrar_cursos_similares
+from aspose.cells import Workbook
+import pandas as pd
 import json
 import re
 import csv
 import os
 import glob
+
+def guardar_sql_desde_csv(ruta_archivo_csv, ruta_archivo_sql):
+    workbook = Workbook(ruta_archivo_csv)
+    workbook.save(ruta_archivo_sql)
+    print("Contenido guardado en el archivo:", ruta_archivo_sql)
 
 def compare(curso1, curso2):
     similitud = compare_cursos(curso1, curso2)
@@ -16,7 +23,7 @@ def compare(curso1, curso2):
 # Guarda el índice en un archivo csvs
 def guardar_indice_csv(indice, archivo_salida):
     with open(archivo_salida, 'w', newline='', encoding='utf-8-sig') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter="|")
+        csv_writer = csv.writer(csv_file)
         csv_writer.writerow(["Curso", "Palabra"])
 
         for palabra, cursos in indice.items():
@@ -126,6 +133,9 @@ def go(n:int, dictionary:str, output:str):
 
     # Guardar el índice en un archivo csv
     guardar_indice_csv(indice, output)
+
+    # Guardar el índice en un archivo sql
+    guardar_sql_desde_csv(output, "datos.sql")
 
     # Cierra el navegador
     driver.quit()
