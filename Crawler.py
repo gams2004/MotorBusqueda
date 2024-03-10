@@ -174,7 +174,7 @@ if __name__ == "__main__":
     os.system("cls") 
     flag = True
     while  flag:
-        op = int(input("Crawler Python\nBIENVENIDO\nSelecciona la opción deseada\n1.Extraer información catálogo de cursos\n2.Comparar cursos\n3. Buscar cursos por intereses\n4. Salir\n"))
+        op = int(input("Crawler Python\nBIENVENIDO\nSelecciona la opción deseada\n1. Extraer información catálogo de cursos\n2. Comparar cursos\n3. Buscar cursos por intereses\n4. Salir\n"))
         if op == 1:
             os.system("cls") 
             numero_paginas = int(input("Ingrese el número de páginas del catálogo a rastrear\n"))

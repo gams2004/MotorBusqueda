@@ -52,4 +52,10 @@ def encontrar_cursos_similares(palabras):
     # Obtener los enlaces de los cursos correspondientes al top 5
     top_5_con_enlaces = [(curso, similitud, next(item['enlace'] for item in datos_leidos if item['titulo'] == curso)) for curso, similitud in top_5_similitud]
 
+    # Guardar las consultas en un archivo SQL
+    with open("consultas.sql", "w") as archivo_sql:
+        for palabra in palabras:
+            consulta = f"SELECT Curso FROM datos_modelo WHERE Palabra='{palabra}'\n"
+            archivo_sql.write(consulta)
+
     return top_5_con_enlaces
